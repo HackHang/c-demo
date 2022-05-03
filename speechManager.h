@@ -61,8 +61,15 @@ public:
 	//±ÈÈü
 	void startMatch();
 
-	//sava
+	//save
 	void saveRecord();
+
+	//load
+	void loadRecord();
+
+	bool fileIsEmpty;
+
+	map<int, vector<string>> m_Record;
 
 	~SpeechManager();
 

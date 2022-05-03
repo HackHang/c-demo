@@ -193,4 +193,56 @@ void SpeechManager::saveRecord() {
 	cout << "Saved!!" << endl;
 }
 
+//load
+void SpeechManager::loadRecord() {
+	ifstream ifs("speech.csv", ios::in);
+	if (!ifs.is_open()) {
+		this->fileIsEmpty = true;
+		cout << "Not Exit!" << endl;
+		ifs.close();
+		return;
+	}
+	//文件清空情况
+	char ch;
+	ifs >> ch;
+	if (ifs.eof()) {
+		cout << "文件为空" << endl;
+		this->fileIsEmpty = true;
+		ifs.close();
+		return;
+	}
+	this->fileIsEmpty = false;
+
+	ifs.putback(ch);
+	string data;
+	int index = 0;
+	while(ifs >> data) {
+		int pos = -1;
+		int start = 0;
+		vector<string> v;
+		while (true) {
+			pos = data.find(",", start);
+			if (pos == -1) {
+				//cout << "Not Exit" << endl;
+				break;
+			}
+			string temp = data.substr(start,pos-start);
+			start = pos+1;
+			v.push_back(temp);
+		}
+		this->m_Record.insert(make_pair(index,v));
+		index++;
+	
+		
+		
+	}	
+	for (map<int, vector<string>>::iterator it = m_Record.begin();it !=
+		m_Record.end();it++) {
+		cout << "hao" << (*it).first << " score:" << (*it).second[0] << endl;
+	}
+	ifs.close();
+}
+
+
+
 SpeechManager::~SpeechManager() {};
